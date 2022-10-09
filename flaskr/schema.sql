@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS movies;
+
+CREATE TABLE movies (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ movie_name TEXT NOT NULL,
+ theatre_name TEXT NOT NULL
+);

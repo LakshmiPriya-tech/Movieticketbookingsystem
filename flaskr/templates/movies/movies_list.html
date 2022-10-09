@@ -1,0 +1,22 @@
+{% block content %}
+  <table>
+    <tr>
+        <th>Select</th>
+        <th>ID</th>
+        <th>Movie Name</th>
+        <th>Theatre Name</th>
+    </tr>
+  {% for movie in movies %}
+    <tr>
+        <td><input form="book_ticket_form" type="radio" name="selected_movie" value="{{ movie['ID'] }}"></input></td>
+        <td>{{ movie['ID'] }}</td>
+        <td>{{ movie['movie_name'] }}</td>
+        <td>{{ movie['theatre_name'] }}</td>
+    </tr>
+  {% endfor %}
+  </table>
+
+  <form method="post" id="book_ticket_form">
+    <input type="submit" value="Book Ticket">
+  </form>
+{% endblock %}
