@@ -9,7 +9,7 @@
   {% for movie in movies %}
     <tr>
         <td><input form="book_ticket_form" type="radio" name="selected_movie" value="{{ movie['ID'] }}"></input></td>
-        <td>{{ movie['ID'] }}</td>
+        <td>{{ movie['id'] }}</td>
         <td>{{ movie['movie_name'] }}</td>
         <td>{{ movie['theatre_name'] }}</td>
     </tr>

@@ -27,7 +27,7 @@ def create_app(test_config=None):
     from . import db
 
     # uncomment below line during first execution
-    # @app.route('/initdb')
+    @app.route('/initdb')
     def initdb():
        db.init_db()
        return 'DB is initailized now'
