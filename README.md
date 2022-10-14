@@ -3,13 +3,18 @@ School project that implements a bare bone movie ticket booking system
 
 # Instructions
 install git and python
-add python to environment variable
-include pip and py
-$ git clone https://github.com/LakshmiPriya-tech/Movieticketbookingsystem.git
-cd Movieticketbookingsystem
-https://flask.palletsprojects.com/en/2.2.x/installation/
-flask --app flaskr run
 
+add python to environment variable
+
+include pip and py
+
+$ git clone https://github.com/LakshmiPriya-tech/Movieticketbookingsystem.git
+
+cd Movieticketbookingsystem
+
+https://flask.palletsprojects.com/en/2.2.x/installation/
+
+flask --app flaskr run
 
 
 // Edit the code files.
