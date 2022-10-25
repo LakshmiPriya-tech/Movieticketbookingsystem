@@ -5,6 +5,7 @@
         <th>ID</th>
         <th>Movie Name</th>
         <th>Theatre Name</th>
+        <th>Seats</th>
     </tr>
   {% for movie in movies %}
     <tr>
@@ -12,6 +13,7 @@
         <td>{{ movie['id'] }}</td>
         <td>{{ movie['movie_name'] }}</td>
         <td>{{ movie['theatre_name'] }}</td>
+        <td>{{ movie['seats'] }}</td>
     </tr>
   {% endfor %}
   </table>

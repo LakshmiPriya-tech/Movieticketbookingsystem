@@ -1,11 +1,24 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, g, redirect, render_template, request, session, url_for,current_app
 )
 from werkzeug.security import check_password_hash, generate_password_hash
-
+import json
 from flaskr.db import get_db
 
+
 bp = Blueprint('movies', __name__, url_prefix='/movies')
+
+@bp.route('/seats', methods=['GET', 'POST'])
+def seats():
+    db=get_db()
+    if request.method == 'GET':
+        selectedmovie=request.args.get('selectedmovie')
+        current_app.logger.info("Selected movie=%s", selectedmovie)
+        s=db.execute('SELECT seats FROM movies WHERE ID = ?',(selectedmovie,)).fetchone()
+        l1=json.loads(s['seats'])
+        current_app.logger.info("Got from db: %s", s['seats'])
+        return render_template("movies/seats.html", seat_numbers=l1 )
+
 
 @bp.route('/list', methods=('GET', 'POST'))
 def register():
@@ -22,4 +35,6 @@ def register():
         m = db.execute(
             'SELECT * from movies WHERE ID = ?', (selected_movie_id,)
             ).fetchone()
-        return "That's great! You have booked your ticket for the movie: " + str(m['movie_name']) + " in the theatre " + m['theatre_name']
+        return redirect(url_for('movies.seats'))
+
+

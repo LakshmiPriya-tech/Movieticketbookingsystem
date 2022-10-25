@@ -1,0 +1,7 @@
+<h1>Select seats</h1>
+{% for seat in seat_numbers %}
+   <input form="selectedseats" type="checkbox" value="{{ seat }}">{{ seat }}</input>
+{% endfor %}
+    <form method="post" id="selectedseats">
+    <input type="submit" value="Book Seats">
+</form>
