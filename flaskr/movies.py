@@ -16,7 +16,20 @@ def seats():
     if request.method == 'GET':
         s=db.execute('SELECT seats FROM movies WHERE ID = ?',(selectedmovie,)).fetchone()
         l=json.loads(s['seats'])
-        return render_template("movies/seats.html", seat_numbers=l )
+        def seats_for_html(l):
+            l_1= db.execute('SELECT booked_seats FROM movies WHERE ID = ?',(selectedmovie))
+            l_booked=json.loads(l_1['booked_seats'])
+            l_all=l.extend(l_booked)
+            d={}
+            for i in l_all:
+                if i in l_booked:
+                    d[i]= True
+                else:
+                    d[i]= False
+            return d,l_all
+        map,l_seats=seats_for_html(l)
+        return render_template("movies/seats.html", seat_numbers=l, mapping_dict=map, list_of_seats=l_seats)   
+
     elif request.method == 'POST':
         current_app.logger.info(str(request.form))
         selected_seats = request.form
@@ -26,10 +39,13 @@ def seats():
             selected_seats_int.append(i)
         s_db=db.execute('SELECT booked_seats FROM movies WHERE ID = ?',(selectedmovie)).fetchone()
         current_app.logger.info('seats from db: %s',str(s_db))
-        s_db1=json.loads(s_db['booked_seats'])
+        if s_db['booked_seats'] == '':
+            db.execute('UPDATE movies SET booked_seats = ? WHERE ID = ?',(json.dumps(selected_seats_int),selectedmovie))
+        else:
+            s_db1=json.loads(s_db['booked_seats'])
         #current_app.logger.info('seats from db: %s',s_db1)
-        s_db1.append(selected_seats_int)
-        db.execute('UPDATE movies SET booked_seats = ? WHERE ID = ?',(json.dumps(s_db1),selectedmovie))
+            s_db1.extend(selected_seats_int)
+            db.execute('UPDATE movies SET booked_seats = ? WHERE ID = ?',(json.dumps(s_db1),selectedmovie))
         db.commit()
 
         s1 = db.execute('SELECT seats FROM movies WHERE ID = ?',(selectedmovie,)).fetchone()
@@ -38,7 +54,10 @@ def seats():
             l1.remove(i)
         db.execute('UPDATE movies SET seats = ? WHERE ID = ?',(json.dumps(l1),selectedmovie,))
         db.commit()
-        return 'success'
+        m=db.execute('SELECT movie_name FROM movies WHERE ID = ?',(selectedmovie)).fetchone()
+        ss=json.dumps(selected_seats_int)
+        current_app.logger.info('seats=%s',(str(ss)))
+        return "You have booked seats "+ str(ss) +" for the movie "+ str(m['movie_name'])
 
         #current_app.logger.info("the selected seats are:%s",selected_seats)
 
