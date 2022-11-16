@@ -16,7 +16,7 @@ def seats():
     if request.method == 'GET':
         s=db.execute('SELECT seats FROM movies WHERE ID = ?',(selectedmovie,)).fetchone()
         l=json.loads(s['seats'])
-        def seats_for_html(l):
+        '''def seats_for_html(l):
             l_1= db.execute('SELECT booked_seats FROM movies WHERE ID = ?',(selectedmovie))
             l_booked=json.loads(l_1['booked_seats'])
             l_all=l.extend(l_booked)
@@ -27,8 +27,8 @@ def seats():
                 else:
                     d[i]= False
             return d,l_all
-        map,l_seats=seats_for_html(l)
-        return render_template("movies/seats.html", seat_numbers=l, mapping_dict=map, list_of_seats=l_seats)   
+        map,l_seats=seats_for_html(l)'''
+        return render_template("movies/seats.html", seat_numbers=l)#, mapping_dict=map, list_of_seats=l_seats)   
 
     elif request.method == 'POST':
         current_app.logger.info(str(request.form))

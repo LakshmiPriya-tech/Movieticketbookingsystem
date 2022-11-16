@@ -5,7 +5,6 @@
         <th>ID</th>
         <th>Movie Name</th>
         <th>Theatre Name</th>
-        <th>Seats</th>
     </tr>
   {% for movie in movies %}
     <tr>
@@ -13,7 +12,7 @@
         <td>{{ movie['id'] }}</td>
         <td>{{ movie['movie_name'] }}</td>
         <td>{{ movie['theatre_name'] }}</td>
-        <td>{{ movie['seats'] }}</td>
+        <td><img src="{{url_for('static', filename=movie['posters'])}}" alt="Italian Trulli" height="200" width="150"></td>
     </tr>
   {% endfor %}
   </table>
