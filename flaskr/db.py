@@ -26,12 +26,11 @@ def init_db():
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
     l=[]
-    for i in range (1,101):
+    for i in range (1,61):
         l.append(i)
     s=json.dumps(l)
     current_app.logger.info("generated seats: %s", s)
     db.execute('UPDATE movies SET seats = ?', (s,))
-    db.execute('UPDATE movies SET seats = "[1,2,3,4,5]" WHERE id = 1')
     db.commit()
 
 def init_app(app):
