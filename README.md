@@ -29,3 +29,4 @@ $ git push origin // will push the commit to github
 
 // to pull others' change
 $ git pull origin // will pull new commits made by others 
+
